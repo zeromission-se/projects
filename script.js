@@ -54,7 +54,7 @@ window.onload = async () => {
         updatePopups();
     });
 
-    const response = await fetch("https://docs.google.com/spreadsheets/d/e/2PACX-1vRRsHUvw--BsVFBa-DuEDmfuVxq8W_h9Q-FbK-DcCYcq6544MMdkMcLegh5xFpUV5xt_wDijSCrqN4f/pub?output=csv");
+    const response = await fetch("https://docs.google.com/spreadsheets/d/e/2PACX-1vS2u6o3JqE0iBmRhimpqE-jhebkHiBrayRnsbfHk6xs5X3zjqqUlPTPQFECu_wQVGxnKCqHNJyMWsAs/pub?output=csv");
     const csvData = await response.text();
     const parsed = Papa.parse(csvData, { header: true, skipEmptyLines: true });
 
