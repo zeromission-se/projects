@@ -91,9 +91,9 @@ const translations = {
 const legendLabels = (type) => translations[lang]?.[type] || type;
 
 const icons = {
-    Binda: L.icon({ iconUrl: "/assets/binda.png", iconSize: [30, 30] }),
-    Forebygga: L.icon({ iconUrl: "/assets/forebygga.png", iconSize: [30, 30] }),
-    Minska: L.icon({ iconUrl: "/assets/minska.png", iconSize: [30, 30] })
+    Binda: L.icon({ iconUrl: "assets/binda.png", iconSize: [30, 30] }),
+    Forebygga: L.icon({ iconUrl: "assets/forebygga.png", iconSize: [30, 30] }),
+    Minska: L.icon({ iconUrl: "assets/minska.png", iconSize: [30, 30] })
 };
 
 const sdgNames = {
@@ -121,9 +121,9 @@ function updateLegend() {
     legend.onAdd = () => {
         const div = L.DomUtil.create("div", "legend");
         div.innerHTML = `
-            <img src="/assets/binda.png" width="30" height="30"> ${legendLabels("Binda")}<br>
-            <img src="/assets/forebygga.png" width="30" height="30"> ${legendLabels("Forebygga")}<br>
-            <img src="/assets/minska.png" width="30" height="30"> ${legendLabels("Minska")}<br>
+            <img src="assets/binda.png" width="30" height="30"> ${legendLabels("Binda")}<br>
+            <img src="assets/forebygga.png" width="30" height="30"> ${legendLabels("Forebygga")}<br>
+            <img src="assets/minska.png" width="30" height="30"> ${legendLabels("Minska")}<br>
         `;
         return div;
     };
@@ -138,7 +138,7 @@ function updatePopups() {
 
         const sdgs = feature.properties.sdgs ? feature.properties.sdgs.split(",").map(s => s.trim()) : [];
         const sdgIcons = sdgs.map(sdg =>
-            `<img src="/assets/SDG${sdg}.png"
+            `<img src="assets/SDG${sdg}.png"
                 alt="SDG ${sdg}"
                 title="${sdgNames[sdg] || `SDG ${sdg}`}"
                 style="width:30px; height:30px; padding:4px;">`
