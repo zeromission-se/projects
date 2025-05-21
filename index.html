@@ -10,11 +10,19 @@
         <link rel="stylesheet" href="styles.css" />
         
         <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
         <script src="script.js"></script>
     </head>
     <body>        
         <div id="map">
             <div id="layer-toggle" class="layer-toggle satellite-layer"></div>
+            <div class="language-switch">
+                <input type="checkbox" id="language-toggle">
+                <label for="language-toggle" class="toggle-label">
+                    <span class="toggle-text off">EN</span>
+                    <span class="toggle-text on">SV</span>
+                </label>
+            </div>
         </div>        
     </body>
 </html>
