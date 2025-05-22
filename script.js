@@ -3,6 +3,7 @@ let geoJson;
 let map;
 let legend;
 let markers = [];
+let activeFilter = null;
 
 window.onload = async () => {
     map = L.map("map", {
@@ -123,14 +124,46 @@ function updateLegend() {
     legend = L.control({ position: "bottomleft" });
     legend.onAdd = () => {
         const div = L.DomUtil.create("div", "legend");
-        div.innerHTML = `
-            <img src="assets/binda.png" width="30" height="30"> ${legendLabels("Binda")}<br>
-            <img src="assets/forebygga.png" width="30" height="30"> ${legendLabels("Forebygga")}<br>
-            <img src="assets/minska.png" width="30" height="30"> ${legendLabels("Minska")}<br>
-        `;
+
+        const types = ["Binda", "Forebygga", "Minska"];
+        div.innerHTML = types.map(type => `
+            <div class="legend-item" data-type="${type}">
+                <img src="assets/${type.toLowerCase()}.png" width="30" height="30">
+                <span>${legendLabels(type)}</span>
+            </div>
+        `).join("");
+
         return div;
     };
     legend.addTo(map);
+
+    document.querySelectorAll(".legend-item").forEach(item => {
+        item.addEventListener("click", () => {
+            const type = item.dataset.type;
+            toggleTypeFilter(type);
+        });
+    });
+}
+
+function toggleTypeFilter(type) {
+    if (activeFilter === type) {
+        activeFilter = null;
+    } else {
+        activeFilter = type;
+    }
+
+    markers.forEach(marker => {
+        const markerType = marker.feature.properties.type_sv;
+        if (!activeFilter || markerType === activeFilter) {
+            marker.addTo(map);
+        } else {
+            map.removeLayer(marker);
+        }
+    });
+
+    document.querySelectorAll(".legend-item").forEach(item => {
+        item.classList.toggle("active", item.dataset.type === activeFilter);
+    });
 }
 
 function updatePopups() {

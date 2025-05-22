@@ -109,6 +109,26 @@
     letter-spacing: 1.4px;
 }
 
+.legend-item {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-bottom: 4px;
+    padding: 4px;
+    border-radius: 6px;
+    transition: background 0.2s;
+}
+
+.legend-item:hover {
+    background: #f0f0f0;
+}
+
+.legend-item.active {
+    background: #cce8e0;
+    font-weight: bold;
+}
+
 .language-switch {
     position: absolute;
     top: 68px;
