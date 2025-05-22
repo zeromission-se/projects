@@ -146,7 +146,7 @@ function updatePopups() {
 
         function buildSdgIconsHtml(sdgs) {
             return sdgs.map((sdg, i) => {
-                const imgHtml = `<img src="/assets/SDG${sdg}.png"
+                const imgHtml = `<img src="assets/SDG${sdg}.png"
                     alt="SDG ${sdg}"
                     title="${sdgNames[sdg] || `SDG ${sdg}`}" />`;
                     if (sdgs.length === 6 && i === 3) {
