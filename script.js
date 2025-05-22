@@ -56,7 +56,10 @@ window.onload = async () => {
 
     const response = await fetch("https://docs.google.com/spreadsheets/d/e/2PACX-1vS2u6o3JqE0iBmRhimpqE-jhebkHiBrayRnsbfHk6xs5X3zjqqUlPTPQFECu_wQVGxnKCqHNJyMWsAs/pub?output=csv");
     const csvData = await response.text();
-    const parsed = Papa.parse(csvData, { header: true, skipEmptyLines: true });
+    const parsed = Papa.parse(csvData, {
+        header: true,
+        skipEmptyLines: true
+    });
 
     geoJson = {
         type: "FeatureCollection",
@@ -84,8 +87,8 @@ window.onload = async () => {
 };
 
 const translations = {
-    en: { Binda: "Remove", Forebygga: "Prevent", Minska: "Reduce" },
-    sv: { Binda: "Binda", Forebygga: "Förebygga", Minska: "Minska" }
+    en: { Binda: "REMOVE", Forebygga: "PREVENT", Minska: "REDUCE" },
+    sv: { Binda: "BINDA", Forebygga: "FÖREBYGGA", Minska: "MINSKA" }
 };
 
 const legendLabels = (type) => translations[lang]?.[type] || type;
@@ -136,13 +139,22 @@ function updatePopups() {
         const name = lang === "sv" ? feature.properties.name_sv : feature.properties.name_en;
         const description = lang === "sv" ? feature.properties.description_sv : feature.properties.description_en;
 
+        const image = feature.properties.image;
+
         const sdgs = feature.properties.sdgs ? feature.properties.sdgs.split(",").map(s => s.trim()) : [];
-        const sdgIcons = sdgs.map(sdg =>
-            `<img src="assets/SDG${sdg}.png"
-                alt="SDG ${sdg}"
-                title="${sdgNames[sdg] || `SDG ${sdg}`}"
-                style="width:30px; height:30px; padding:4px;">`
-        ).join("");
+        const sdgIconsHtml = buildSdgIconsHtml(sdgs);
+
+        function buildSdgIconsHtml(sdgs) {
+            return sdgs.map((sdg, i) => {
+                const imgHtml = `<img src="/assets/SDG${sdg}.png"
+                    alt="SDG ${sdg}"
+                    title="${sdgNames[sdg] || `SDG ${sdg}`}" />`;
+                    if (sdgs.length === 6 && i === 3) {
+                        return `<span>${imgHtml}</span><span class="flex-break"></span>`;
+                    }
+                    return `<span>${imgHtml}</span>`;
+            }).join("");
+        }
 
         let link = feature.properties.link;
 
@@ -155,10 +167,15 @@ function updatePopups() {
         }
 
         marker.bindPopup(
-            `<div class="customPopup" style="min-width: 200px;">
-                <a href=${link} target="_blank"><b>${name}</b></a><br>
-                ${description}<br>
-                ${sdgIcons ? `<div style="display: flex; justify-content: center; flex-wrap: wrap; margin-top: 6px;">${sdgIcons}</div>` : ""}
+            `<div class="customPopup">
+                <div class="popupImage">
+                <img src=${image} alt=${name}>
+                    <div class="popupText">
+                        <a href=${link} target="_blank"><b>${name}</b></a><br>
+                        <span>${description}</span>
+                    </div>
+                    ${sdgIconsHtml ? `<div class="popupSDGs">${sdgIconsHtml}</div>` : ""}
+                </div>
             </div>`
         );
     });
