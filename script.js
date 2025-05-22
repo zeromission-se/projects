@@ -138,8 +138,11 @@ function updateLegend() {
     legend.addTo(map);
 
     document.querySelectorAll(".legend-item").forEach(item => {
+        const type = item.dataset.type;
+        if (type === activeFilter) {
+            item.classList.add("active");
+        }
         item.addEventListener("click", () => {
-            const type = item.dataset.type;
             toggleTypeFilter(type);
         });
     });
