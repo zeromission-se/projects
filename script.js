@@ -175,7 +175,7 @@ function updatePopups() {
         const name = lang === "sv" ? feature.properties.name_sv : feature.properties.name_en;
         const description = lang === "sv" ? feature.properties.description_sv : feature.properties.description_en;
 
-        const image = feature.properties.image;
+        const image = feature.properties.image || "assets/default.webp";
 
         const sdgs = feature.properties.sdgs ? feature.properties.sdgs.split(",").map(s => s.trim()) : [];
         const sdgIconsHtml = buildSdgIconsHtml(sdgs);
