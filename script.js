@@ -10,6 +10,15 @@ window.onload = async () => {
         attributionControl: true
     }).setView([20, 0], 2);
 
+    const bounds = L.latLngBounds(
+        L.latLng(-60, -180),
+        L.latLng(85, 220)
+    );
+    map.setMaxBounds(bounds);
+    map.on('drag', function () {
+        map.panInsideBounds(bounds, { animate: false });
+    });
+
     map.attributionControl.setPrefix('');
 
     const baseLayers = {
