@@ -22,7 +22,7 @@ window.onload = async () => {
     map.attributionControl.setPrefix('');
 
     const baseLayers = {
-        "Vector": L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png", {
+        "Vector": L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png?key=cb1_2lwu_1_d4e44e295cf3feef7629285a", {
             attribution: '<a href="https://openstreetmap.org">Open Street Map</a> contributors & <a href="https://carto.com">CARTO</a>',
             maxZoom: 10,
             minZoom: 2
